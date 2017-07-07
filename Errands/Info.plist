@@ -4,6 +4,8 @@
 <dict>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
+	<key>CFBundleDisplayName</key>
+	<string>Errands</string>
 	<key>CFBundleDocumentTypes</key>
 	<array>
 		<dict>
@@ -25,8 +27,6 @@
 	<string>$(PRODUCT_NAME)</string>
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
-	<key>NSLocationUsageDescription</key>
-	<string>Calculating start location of trip</string>
 	<key>CFBundleShortVersionString</key>
 	<string>1.0</string>
 	<key>CFBundleSignature</key>
@@ -39,10 +39,12 @@
 	<array>
 		<string>MKDirectionsModeCar</string>
 	</array>
-	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>Errands would like to use your currrent location</string>
 	<key>NSLocationAlwaysUseageDescription</key>
 	<string>Errands would like to always use your location</string>
+	<key>NSLocationUsageDescription</key>
+	<string>Calculating start location of trip</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>Errands would like to use your currrent location</string>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>

@@ -18,6 +18,7 @@ ERRPR 2: current algorithm finds shortest path, but does not guarentee that all 
 import Foundation
 import UIKit
 import MapKit
+import iAd
 
 
 
@@ -48,6 +49,7 @@ class HomeViewController: UIViewController{
 
 extension HomeViewController{
 	override func viewDidLoad() {
+		self.canDisplayBannerAds = true
 		errandsManager = ErrandsManager()
 		errandsManager.delegate = self
 		
@@ -67,12 +69,11 @@ extension HomeViewController{
 	func setOrdered(){
 		self.ordered = true
 		if travelTime != nil{
-			durationLabel.text = "Time on road: \(formatETA(travelTime!))"
+			durationLabel.text = "Time on road: \(travelTime!.stringTime)"
 		}
 		if let last = errands.last{
 			arrivalTimeLabel.text = "Arrive at final location: \(errands.last!.timeOfArrival.displayDate)"
 		}
-		
 		tableView.reloadData()
 	}
 	
@@ -101,7 +102,7 @@ extension HomeViewController{
 		case errands.count - 1:
 			return "Finish"
 		default:
-			return "\(index + 1)"
+			return "\(index)"
 		}
 	}
 	//Formatting
