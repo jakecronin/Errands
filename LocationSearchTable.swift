@@ -17,7 +17,7 @@ class LocationSearchTable: UITableViewController{
 	var matchingItems: [MKMapItem] = []		//array of map items which include location and related data
 	
 	func parseAddress(_ selectedItem: MKPlacemark) -> String{	//this function parses an address from a given placemark. Includes latitude, longitude, country, state, city, and street address associated with the specified coordinate
-		let streetNumberAndNameSpace = (selectedItem.subThoroughfare != nil &&  selectedItem.thoroughfare != nil) ? "ItsJake!": ""		//subThoroughfare is street number. thoroughfare is steet name
+		let streetNumberAndNameSpace = (selectedItem.subThoroughfare != nil &&  selectedItem.thoroughfare != nil) ? " ": ""		//subThoroughfare is street number. thoroughfare is steet name
 		let steetAndCitySpace = (selectedItem.thoroughfare != nil || selectedItem.subThoroughfare != nil) && (selectedItem.subAdministrativeArea != nil || selectedItem.administrativeArea != nil) ? ", " : ""	//subAdministrative area is county, administrativeArea is state (sometimes abbreviated)
 		let cityAndStateSpace = (selectedItem.subAdministrativeArea != nil && selectedItem.administrativeArea != nil) ? " " : ""
 		let addressLine = String(format: "%@%@%@%@%@%@%@", selectedItem.subThoroughfare ?? "", streetNumberAndNameSpace, selectedItem.thoroughfare ?? "", steetAndCitySpace, selectedItem.subAdministrativeArea ?? "", cityAndStateSpace,selectedItem.administrativeArea ?? "")

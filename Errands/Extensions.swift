@@ -34,3 +34,34 @@ extension TimeInterval{
 		}
 	}
 }
+extension Date{
+	var displayDate: String{
+		let dateformatter = DateFormatter()
+		dateformatter.amSymbol = "am"
+		dateformatter.pmSymbol = "pm"
+		
+		if Calendar.current.isDateInToday(self){
+			dateformatter.dateFormat = "h:mma"
+			return dateformatter.string(from: self)
+		}else{
+			dateformatter.dateFormat = "M/dd h:mma"
+			return dateformatter.string(from: self)
+		}
+	}
+}
+
+extension String{
+	var dateFromDisplay: Date?{
+		let dateformatter = DateFormatter()
+		dateformatter.amSymbol = "am"
+		dateformatter.pmSymbol = "pm"
+		dateformatter.dateFormat = "h:mma"
+		if let toReturn = dateformatter.date(from: self){
+			return toReturn
+		}else{
+			dateformatter.dateFormat = "M/dd h:mma"
+			return dateformatter.date(from: self)
+		}
+	}
+	
+}

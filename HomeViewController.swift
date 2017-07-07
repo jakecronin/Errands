@@ -19,6 +19,8 @@ import Foundation
 import UIKit
 import MapKit
 
+
+
 class HomeViewController: UIViewController{
 	
 	@IBOutlet weak var tableView: UITableView!
@@ -27,149 +29,81 @@ class HomeViewController: UIViewController{
 	@IBOutlet weak var arrivalTimeLabel: UILabel!
 	@IBOutlet weak var durationLabel: UILabel!
 	
-	var errands: [Errand] = []					//holds all destinations | Index 0 is start | Index 1 is end
-	var minPath: Path?
+	@IBOutlet weak var timeInput: UITextField!
 	
-	var etaCallsCompleted = 0
-	var etaCallsToMake = 0
-	var minHeap = PathMinHeap()
+	var activityIndicator = UIActivityIndicatorView()
+	
+	var ordered = false
+	var travelTime: Double?
+	//var arrivalTime
+	
+	var errands: [Errand] = []{
+		didSet{
+			setUnordered()
+		}
+	}
+	var errandsManager = ErrandsManager()
 	
 }
 
 extension HomeViewController{
-	func constructShortestPath(from: Errand, to: Errand){
-		print("started construct shortest path")//find shortest path with breadth first search prioritizing shortest connection
+	override func viewDidLoad() {
+		errandsManager = ErrandsManager()
+		errandsManager.delegate = self
 		
-		//initialize
-		minHeap = PathMinHeap()
-		minPath = nil
-		let firstPath = Path()
-		firstPath.addErrand(errand: from, timeOfArrival: Date())
-		minHeap.insert(firstPath)
-		
-		
-		shortestPathHelper(path: minHeap.remove()!)
-	}
-	func shortestPathHelper(path: Path){
-		let pathEnd = path.path.last!
-		if minPath != nil && path.travelTime > minPath!.travelTime{
-			self.completedAllETACalls()
-			return									//kill this path
-		}else if path.path.count == errands.count - 1{	//just needs the last destination!
-			let finalDestination = errands.last!
-			getETA(pathEnd, to: finalDestination, at: path.arrivalTimes[pathEnd]!, completion: { (result) in
-				guard result != nil else{
-					self.completedAllETACalls()
-					return
-				}
-				path.travelTime = path.travelTime + result!		//update travel time
-				if self.minPath == nil || path.travelTime < self.minPath!.travelTime{ //if path is fast, update it
-					self.minPath = path
-					let timeOfArrival = path.arrivalTimes[pathEnd]!.addingTimeInterval(result!)	//calculate time of arrival
-					path.addErrand(errand: finalDestination, timeOfArrival: timeOfArrival)	//append new destination to path
-				}
-				self.completedAllETACalls()
-			})
-		}else{		//get shortest path to everyone but first and last, and throw nodes onto queue if they are updated
-			etaCallsCompleted = 0
-			etaCallsToMake = errands.count - 2 //call to everyone but first and last
-			for i in 1..<errands.count-1{
-				var thisPath  = path.copy()
-				getETA(pathEnd, to: errands[i], at: thisPath.arrivalTimes[pathEnd]!, completion: { (result) in
-					self.etaCallsCompleted = self.etaCallsCompleted + 1
-					guard result != nil else{
-						print("error getting duration for a node")
-						if self.etaCallsCompleted >= self.etaCallsToMake{
-							self.completedAllETACalls()
-						}
-						return	//error, kill path
-					}
-					
-					print("appending destination \(self.errands[i].name) to path \(pathEnd.name)")
-					//Did not get nil result, so add path onto queue
-					thisPath.travelTime = thisPath.travelTime + result!
-					let arrivalTime = thisPath.arrivalTimes[pathEnd]!.addingTimeInterval(result!)
-					thisPath.addErrand(errand: self.errands[i], timeOfArrival: arrivalTime)
-					
-					//Quick weedout of absurdly long paths
-					if self.minPath == nil || thisPath.travelTime < self.minPath!.travelTime{
-						self.minHeap.insert(thisPath)
-					}
-					if self.etaCallsCompleted >= self.etaCallsToMake{
-						self.completedAllETACalls()
-						return
-					}
-				})
-			}
-		}
-	}
-	func getETA(_ from: Errand, to: Errand, at: Date, completion: @escaping (_ eta: Double?) -> Void){
-		if from.mapItem == to.mapItem{
-			completion(Double.infinity)
-			return
-		}
-		let request: MKDirectionsRequest = MKDirectionsRequest()
-		var eta: Double?
-		request.source = from.mapItem
-		request.destination = to.mapItem
-		request.departureDate = at
-		request.transportType = MKDirectionsTransportType.automobile
-		
-		let directions: MKDirections = MKDirections(request: request)
-		
-		directions.calculateETA { (response: MKETAResponse?, error: Error?) in
-			if error != nil {
-				print("error getting ETA between \(from.name) and \(to.name)")
-				print(error!)
-				completion(nil)
-			}
-			guard response != nil else{
-				print("error, response is nil in calculateETA")
-				completion(nil)
-				return
-			}
-			print("successfully completed eta request from \(from.name) to \(to.name)")
-			eta = response!.expectedTravelTime
-			completion(eta)
-		}
-	}
+		timeInput.text = Date().displayDate
+		let datePickerView: UIDatePicker = UIDatePicker()
+		datePickerView.date = Date()
+		timeInput.inputView = datePickerView
+		datePickerView.addTarget(self, action: #selector(self.dateValueChanged(_:)), for: UIControlEvents.valueChanged)
+		addToolBar(to: timeInput)
 
-	//MARK: "Delegate" Functions
-	func completedAllETACalls() {				//called when finished calcing all distances from a node, move on to next
-		print("completed all etacalls called with heap: \(minHeap.print())")
-		if let path = minHeap.remove(){
-			shortestPathHelper(path: path)
-		}else{									//if there is no next, we are done
-			didGetShortestPath()
-		}
 	}
-	func didGetShortestPath(){	//called when shortest path algorithm has completed, aka minheap is empty
-		//END ACTIVITY INDIVATOR, Reload Table
-		print("did get shortest path called")
-		guard self.minPath != nil else{
-			print("error, got shortest path, but it was nil. not chanigng array")
-			return
+	func setUnordered(){
+		arrivalTimeLabel.text = "Arrival Time Not Calculated"
+		durationLabel.text = "Duration Not Calcualted"
+		self.ordered = false
+	}
+	func setOrdered(){
+		self.ordered = true
+		if travelTime != nil{
+			durationLabel.text = "Time on road: \(formatETA(travelTime!))"
+		}
+		if let last = errands.last{
+			arrivalTimeLabel.text = "Arrive at final location: \(errands.last!.timeOfArrival.displayDate)"
 		}
 		
-		errands = minPath!.path
 		tableView.reloadData()
-		setLabels(duration: minPath?.travelTime, arriveAt: minPath?.arrivalTimes[minPath!.path.last!])
-		
 	}
 	
-	func setLabels(duration: Double?, arriveAt: Date?){
-		if duration == nil{
-			durationLabel.text = "duration not calculated"
-		}else{
-			durationLabel.text = "Duration is: \(duration!.stringTime))"
-		}
-		if arriveAt == nil{
-			arrivalTimeLabel.text = "Arrival time not calculated"
-		}else{
-			arrivalTimeLabel.text = "Arrive at: \(String(describing: arriveAt!)))"
-		}
+	func beginActivityIndicator(){
+		activityIndicator = UIActivityIndicatorView(frame: CGRect(x: 0, y: 0, width: 150, height: 150))
+		activityIndicator.center = self.view.center
+		activityIndicator.hidesWhenStopped = true
+		activityIndicator.color = themeMainColor
+		self.view.addSubview(activityIndicator)
+		activityIndicator.startAnimating()
+		UIApplication.shared.beginIgnoringInteractionEvents()
+	}
+	func stopActivityIndicator(){
+		self.activityIndicator.stopAnimating()
+		UIApplication.shared.endIgnoringInteractionEvents()
 	}
 	
+	func dateValueChanged(_ sender: UIDatePicker){
+		timeInput.text = sender.date.displayDate
+	}
+	
+	fileprivate func getPositionText(index: Int) -> String{
+		switch index {
+		case 0:
+			return "Start"
+		case errands.count - 1:
+			return "Finish"
+		default:
+			return "\(index + 1)"
+		}
+	}
 	//Formatting
 	func cellTextLabel(_ x: Int) -> String{
 		
@@ -187,33 +121,35 @@ extension HomeViewController{
 		return s
 	}
 	func formatETA(_ t: Double) -> String{
-		var s = "Your trip will take "
-		let time: Int = Int(t)
-		let seconds: Int = time % 60
-		let minutes: Int = (time / 60) % 60
-		let hours: Int = (time / 60 / 60) % 24
-		let days: Int = (time / 60 / 60 / 24)
-		if days == 1{
-			s = s + "\(days) day "
-		}else if days > 1{
-			s = s + "\(days) days "
+		return t.stringTime
+	}
+	func addToolBar(to textField: UITextField){
+		let toolBar = UIToolbar()
+		toolBar.barStyle = .default
+		toolBar.isTranslucent = true
+		toolBar.tintColor = themeMainColor
+		let doneButton = UIBarButtonItem(title: "Done", style: .done, target: self, action: #selector(donePressed))
+		toolBar.setItems([doneButton], animated: false)
+		
+		toolBar.isUserInteractionEnabled = true
+		toolBar.sizeToFit()
+		textField.inputAccessoryView = toolBar
+	}
+	func donePressed() {
+		view.endEditing(true)
+	}
+}
+
+extension HomeViewController: ErrandsManagerDelegate{
+	func didGetShortestPath(path: [Errand]?, duration: Double?){
+		guard path != nil else{
+			print("error, got shortest path, but it was nil. not chanigng array")
+			return
 		}
-		if hours == 1{
-			s = s + "\(hours) hour "
-		}else if hours > 1{
-			s = s + "\(hours) hours "
-		}
-		if minutes == 1{
-			s = s + "\(minutes) minute "
-		}else if days > 1{
-			s = s + "\(minutes) minutes "
-		}
-		if seconds == 1{
-			s = s + "\(seconds) second"
-		}else if days > 1{
-			s = s + "\(seconds) seconds"
-		}
-		return s
+		errands = path!
+		travelTime = duration
+		setOrdered()
+		stopActivityIndicator()
 	}
 }
 
@@ -224,7 +160,17 @@ extension HomeViewController{
 			print("not enough places to calculate optimal rout")
 			return
 		}
-		constructShortestPath(from: errands[0], to: errands[errands.count - 1])
+		guard errands.count < 6 else{
+			print("error, too many locations.")
+			return
+		}
+		beginActivityIndicator()
+		if let date = timeInput.text?.dateFromDisplay{
+			errands[0].timeOfArrival = date
+		}else{
+			errands[0].timeOfArrival = Date()
+		}
+		errandsManager.constructShortestPath(with: errands, startIndex: 0, endIndex: errands.count-1)
 	}
 	@IBAction func unwindToHome(_ segue: UIStoryboardSegue){	//take destination and name from
 		let mapViewController: MapViewController = segue.source as! MapViewController
@@ -237,18 +183,35 @@ extension HomeViewController{
 
 extension HomeViewController: UITableViewDelegate, UITableViewDataSource{
 	func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-		
-		let cell = tableView.dequeueReusableCell(withIdentifier: "cell") as! Cell
-		cell.locationLabel.text = errands[indexPath.row].name
-		cell.orderLabel.text = cellTextLabel(indexPath.row)
-		cell.errand = errands[indexPath.row]
-		cell.delegate = self
-		
-		return cell
+		if ordered{
+			let cell = tableView.dequeueReusableCell(withIdentifier: "OrderedCell") as! OrderedCell
+			cell.errand = errands[indexPath.row]
+			cell.locationLabel.text = errands[indexPath.row].name
+			cell.positionLabel.text = getPositionText(index: indexPath.row)
+			cell.positionLabel.textColor = themeMainColor
+			let arrive = errands[indexPath.row].timeOfArrival
+			let timeAt = errands[indexPath.row].timeAtPlace
+			cell.arrivalLabel.text = "Arrive at: \(arrive.displayDate)"
+			cell.leaveLabel.text = "Leave at: \(arrive.addingTimeInterval(timeAt).displayDate)"
+			return cell
+		}else if indexPath.row == errands.count{
+			return tableView.dequeueReusableCell(withIdentifier: "AddCell") as! AddCell
+		}else{
+			let cell = tableView.dequeueReusableCell(withIdentifier: "UnorderedCell") as! UnorderedCell
+			cell.locationLabel.text = errands[indexPath.row].name
+			cell.errand = errands[indexPath.row]
+			cell.delegate = self
+			cell.update(index: indexPath.row, errandsCount: errands.count)
+			addToolBar(to: cell.durationField)
+			return cell
+		}
 	}
 	func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int{
-		setLabels(duration: nil, arriveAt: nil)
-		return errands.count
+		if ordered{
+			return errands.count
+		}else{
+			return errands.count + 1
+		}
 	}
 	func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath){
 		if editingStyle == UITableViewCellEditingStyle.delete{
@@ -256,163 +219,77 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource{
 			tableView.reloadData()
 		}
 	}
+	func tableView(_ tableView: UITableView, shouldHighlightRowAt indexPath: IndexPath) -> Bool {
+		if indexPath.row == errands.count{
+			return true
+		}else{
+			return false
+		}
+	}
+	func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+		print("selected cell")
+		if let cell = tableView.cellForRow(at: indexPath) as? AddCell{
+			performSegue(withIdentifier: "segueToMap", sender: self)
+		}
+	}
+	func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
+		print("moving cell")
+		if let cell = tableView.cellForRow(at: sourceIndexPath) as? UnorderedCell{
+			if sourceIndexPath.row == 0{
+				cell.showStart()
+			}else if sourceIndexPath.row == errands.count - 1{
+				cell.showEnd()
+			}else{
+				cell.showNothing()
+			}
+		}else if let cell = tableView.cellForRow(at: destinationIndexPath) as? UnorderedCell{
+			if destinationIndexPath.row == 0{
+				cell.showStart()
+			}else if destinationIndexPath.row == errands.count - 1{
+				cell.showEnd()
+			}else{
+				cell.showNothing()
+			}
+		}
+	}
 }
 
-extension HomeViewController: cellDelegate{
-	func upArrowPressed(cell: Cell) {
+extension HomeViewController: unorderedCellDelegate{
+	func upArrowPressed(cell: UnorderedCell) {
 		print("up pressed for \(cell.errand!.name)")
 		for i in 1..<errands.count {//start at second one, because first cannot move up
 			if errands[i] == cell.errand!{
 				errands[i] = errands[i - 1]
 				errands[i - 1] = cell.errand!
-				tableView.reloadData()
+				let at = IndexPath(row: i, section: 0)
+				let to = IndexPath(row: i-1, section: 0)
+				let movingUp = tableView.cellForRow(at: at) as! UnorderedCell
+				let movingDown = tableView.cellForRow(at: to) as! UnorderedCell
+				movingUp.update(index: i-1, errandsCount: errands.count)
+				movingDown.update(index: i, errandsCount: errands.count)
+				tableView.moveRow(at: at, to: to)
 				return
 			}
 		}
 	}
-	func downArrowPressed(cell: Cell) {
+	func downArrowPressed(cell: UnorderedCell) {
 		print("down pressed for \(cell.errand!.name)")
 		for i in 0..<errands.count - 1{	//only go to second to last, because last cannot be moved down
 			if errands[i] == cell.errand!{
 				errands[i] = errands[i+1]
 				errands[i+1] = cell.errand!
-				tableView.reloadData()
+				let at = IndexPath(row: i, section: 0)
+				let to = IndexPath(row: i+1, section: 0)
+				let movingDown = tableView.cellForRow(at: at) as! UnorderedCell
+				let movingUp = tableView.cellForRow(at: to) as! UnorderedCell
+				movingDown.update(index: i+1, errandsCount: errands.count)
+				movingUp.update(index: i, errandsCount: errands.count)
+				tableView.moveRow(at: at, to: to)
 				return
 			}
 		}
 	}
 	
-}
-
-class Errand: Hashable{
-	public static func ==(lhs: Errand, rhs: Errand) -> Bool{ //hold each destination and its id number
-		if lhs.name == rhs.name && lhs.mapItem == rhs.mapItem && lhs.hashValue == rhs.hashValue{
-			return true
-		}else{
-			return false
-		}
-	}
-	
-	init(mapItem: MKMapItem, name: String, index: Int) {
-		self.mapItem = mapItem
-		self.name = name
-		self.index = index
-		hashValue = mapItem.hashValue
-	}
-	
-	var hashValue: Int
-	
-	let mapItem: MKMapItem
-	let name: String
-	let index : Int		//the position of this destination in the optimal path
-}
-class Path{	//allows maintaining multiple different paths in heap
-	var path = [Errand]()
-	var arrivalTimes = [Errand: Date]()
-	
-	func addErrand(errand: Errand, timeOfArrival: Date){
-		path.append(errand)
-		arrivalTimes[errand] = timeOfArrival
-	}
-	
-	var travelTime: Double = 0
-	func compare(to: Path) -> Bool{	//returns true if this path is prioritized. 1. most destinations, 2. shortest duration
-		if self.path.count > to.path.count{
-			return true
-		}else if to.path.count > self.path.count{
-			return false
-		}else{
-			if self.travelTime < to.travelTime{
-				return true
-			}else{
-				return false
-			}
-		}
-	}
-	
-	func copy() -> Path{
-		let toReturn = Path()
-		for path in self.path{
-			toReturn.travelTime = self.travelTime
-			toReturn.path.append(path)
-			toReturn.arrivalTimes[path] = self.arrivalTimes[path]
-		}
-		return toReturn
-	}
-}
-
-class PathMinHeap{		//heap starts at size 20 to avoid resizing, but resize check is in place for app scaling
-	var heap = [Path]()
-	
-	func swap(_ x: Int, y: Int){
-		let temp = heap[x]
-		heap[x] = heap[y]
-		heap [y] = temp
-	}
-	func insert(_ path: Path){
-		heap.append(path)
-		if heap.count > 1{	//may need to heapify
-			var newPathIndex = heap.count - 1
-			var parentIndex = (newPathIndex - 1) / 2
-			while path.compare(to: heap[parentIndex]){
-				swap(newPathIndex, y: parentIndex)
-				newPathIndex = parentIndex
-				parentIndex = (parentIndex - 1) / 2
-			}
-		}
-	}
-	func remove() -> Path?{
-		let toRemove = heap.first
-		if heap.count <= 1{
-			heap = [Path]()
-		}else{
-			heap[0] = heap[heap.count - 1]
-			heap.removeLast()
-			reheap(0)
-		}
-		return toRemove
-	}
-	func isEmpty() -> Bool{
-		return heap.count < 1
-	}
-
-	func print() -> String{
-		if isEmpty(){
-			return "empty"
-		}else{
-			var toReturn = ""
-			for node in heap{
-				toReturn.append("\(node.path.last!.name), ")
-			}
-			return toReturn
-		}
-	}
-	
-	private func reheap(_ start: Int){	//figure out which child is shortest, and swap
-		let leftIndex = (start + 1) * 2 - 1
-		let rightIndex = (start + 1) * 2
-		
-		//end if there is no left leaf
-		guard leftIndex > heap.count else{
-			return
-		}
-		
-		//run full comparison if there is also a right index
-		if rightIndex < heap.count{	//right exists
-			if heap[rightIndex].compare(to: heap[leftIndex]){ //right is best leaf
-				if heap[rightIndex].compare(to: heap[start]){//right is better than start too
-					swap(rightIndex, y: start)
-					reheap(rightIndex)
-				}
-			}
-			//no right leaf, just run comparison on left
-		}else{
-			if heap[leftIndex].compare(to: heap[start]){
-				swap(start*2, y: start)
-				reheap(start*2)
-			}
-		}
-	}
 }
 
 

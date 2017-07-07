@@ -10,9 +10,14 @@
 		634045B61CFA30F400C807AE /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 634045B51CFA30F400C807AE /* HomeViewController.swift */; };
 		634045B81CFA314D00C807AE /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 634045B71CFA314D00C807AE /* MapViewController.swift */; };
 		6350A52A1D18ADFB00782726 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6350A5291D18ADFB00782726 /* CoreLocation.framework */; };
-		6376698D1F09F620008BDA50 /* Cell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6376698C1F09F620008BDA50 /* Cell.swift */; };
+		6376698D1F09F620008BDA50 /* UnorderedCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6376698C1F09F620008BDA50 /* UnorderedCell.swift */; };
 		6376698F1F0BECAE008BDA50 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6376698E1F0BECAE008BDA50 /* Extensions.swift */; };
 		638521231CFB8AC9001BF266 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 638521221CFB8AC9001BF266 /* MapKit.framework */; };
+		63C2490B1F0DCE4500231D5F /* ErrandsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63C2490A1F0DCE4500231D5F /* ErrandsManager.swift */; };
+		63C2490D1F0DCE8000231D5F /* Errand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63C2490C1F0DCE8000231D5F /* Errand.swift */; };
+		63C249101F0DDA7100231D5F /* OrderedCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63C2490F1F0DDA7100231D5F /* OrderedCell.swift */; };
+		63C249121F0DDC0700231D5F /* AddCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63C249111F0DDC0700231D5F /* AddCell.swift */; };
+		63C249141F0F1BA600231D5F /* GlobalVariables.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63C249131F0F1BA500231D5F /* GlobalVariables.swift */; };
 		63C6BE131CF8E63E002E34FF /* LocationSearchTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63C6BE121CF8E63E002E34FF /* LocationSearchTable.swift */; };
 		63E6F35C1CF4E3F500886FE0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63E6F35B1CF4E3F500886FE0 /* AppDelegate.swift */; };
 		63E6F3611CF4E3F500886FE0 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 63E6F35F1CF4E3F500886FE0 /* Main.storyboard */; };
@@ -24,9 +29,14 @@
 		634045B51CFA30F400C807AE /* HomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = HomeViewController.swift; path = ../HomeViewController.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		634045B71CFA314D00C807AE /* MapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		6350A5291D18ADFB00782726 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
-		6376698C1F09F620008BDA50 /* Cell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Cell.swift; sourceTree = "<group>"; };
+		6376698C1F09F620008BDA50 /* UnorderedCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UnorderedCell.swift; sourceTree = "<group>"; };
 		6376698E1F0BECAE008BDA50 /* Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		638521221CFB8AC9001BF266 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
+		63C2490A1F0DCE4500231D5F /* ErrandsManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ErrandsManager.swift; sourceTree = "<group>"; };
+		63C2490C1F0DCE8000231D5F /* Errand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Errand.swift; sourceTree = "<group>"; };
+		63C2490F1F0DDA7100231D5F /* OrderedCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OrderedCell.swift; sourceTree = "<group>"; };
+		63C249111F0DDC0700231D5F /* AddCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddCell.swift; sourceTree = "<group>"; };
+		63C249131F0F1BA500231D5F /* GlobalVariables.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GlobalVariables.swift; sourceTree = "<group>"; };
 		63C6BE121CF8E63E002E34FF /* LocationSearchTable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LocationSearchTable.swift; path = ../LocationSearchTable.swift; sourceTree = "<group>"; };
 		63E6F3581CF4E3F500886FE0 /* Errands.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Errands.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		63E6F35B1CF4E3F500886FE0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -49,6 +59,34 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		63C2490E1F0DDA4500231D5F /* CellsViews */ = {
+			isa = PBXGroup;
+			children = (
+				6376698C1F09F620008BDA50 /* UnorderedCell.swift */,
+				63C2490F1F0DDA7100231D5F /* OrderedCell.swift */,
+				63C249111F0DDC0700231D5F /* AddCell.swift */,
+			);
+			name = CellsViews;
+			sourceTree = "<group>";
+		};
+		63C249151F0F1BBB00231D5F /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				63C2490C1F0DCE8000231D5F /* Errand.swift */,
+			);
+			name = Models;
+			sourceTree = "<group>";
+		};
+		63C249161F0F1BC800231D5F /* VCs */ = {
+			isa = PBXGroup;
+			children = (
+				634045B71CFA314D00C807AE /* MapViewController.swift */,
+				634045B51CFA30F400C807AE /* HomeViewController.swift */,
+				63C6BE121CF8E63E002E34FF /* LocationSearchTable.swift */,
+			);
+			name = VCs;
+			sourceTree = "<group>";
+		};
 		63E6F34F1CF4E3F500886FE0 = {
 			isa = PBXGroup;
 			children = (
@@ -70,12 +108,13 @@
 		63E6F35A1CF4E3F500886FE0 /* Errands */ = {
 			isa = PBXGroup;
 			children = (
+				63C249131F0F1BA500231D5F /* GlobalVariables.swift */,
 				6376698E1F0BECAE008BDA50 /* Extensions.swift */,
 				63E6F35B1CF4E3F500886FE0 /* AppDelegate.swift */,
-				6376698C1F09F620008BDA50 /* Cell.swift */,
-				634045B51CFA30F400C807AE /* HomeViewController.swift */,
-				634045B71CFA314D00C807AE /* MapViewController.swift */,
-				63C6BE121CF8E63E002E34FF /* LocationSearchTable.swift */,
+				63C2490A1F0DCE4500231D5F /* ErrandsManager.swift */,
+				63C2490E1F0DDA4500231D5F /* CellsViews */,
+				63C249161F0F1BC800231D5F /* VCs */,
+				63C249151F0F1BBB00231D5F /* Models */,
 				63E6F35F1CF4E3F500886FE0 /* Main.storyboard */,
 				63E6F3621CF4E3F500886FE0 /* Assets.xcassets */,
 				63E6F3641CF4E3F500886FE0 /* LaunchScreen.storyboard */,
@@ -161,11 +200,16 @@
 			buildActionMask = 2147483647;
 			files = (
 				63C6BE131CF8E63E002E34FF /* LocationSearchTable.swift in Sources */,
+				63C2490B1F0DCE4500231D5F /* ErrandsManager.swift in Sources */,
 				6376698F1F0BECAE008BDA50 /* Extensions.swift in Sources */,
+				63C2490D1F0DCE8000231D5F /* Errand.swift in Sources */,
+				63C249101F0DDA7100231D5F /* OrderedCell.swift in Sources */,
 				63E6F35C1CF4E3F500886FE0 /* AppDelegate.swift in Sources */,
-				6376698D1F09F620008BDA50 /* Cell.swift in Sources */,
+				63C249141F0F1BA600231D5F /* GlobalVariables.swift in Sources */,
+				6376698D1F09F620008BDA50 /* UnorderedCell.swift in Sources */,
 				634045B81CFA314D00C807AE /* MapViewController.swift in Sources */,
 				634045B61CFA30F400C807AE /* HomeViewController.swift in Sources */,
+				63C249121F0DDC0700231D5F /* AddCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
