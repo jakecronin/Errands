@@ -105,7 +105,7 @@ extension MapViewController: CLLocationManagerDelegate{	//delegate for locationM
 		}
 	}
 	
-	func locationManager(_ manager: CLLocationManager, didFailWithError error: NSError) {
+	func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
 		print("Error with location manager: \(error)")
 	}
 }
@@ -138,7 +138,7 @@ extension MapViewController: MKMapViewDelegate{
 		let reuseID = "pin"
 		var pinView = mapView.dequeueReusableAnnotationView(withIdentifier: reuseID) as? MKPinAnnotationView
 		pinView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: reuseID)
-		pinView?.pinTintColor = UIColor.cyan
+		pinView?.pinTintColor = themeMainColor
 		pinView?.canShowCallout = true
 		let smallSquare = CGSize(width: 50, height: 50)
 		let button = UIButton(frame: CGRect(origin: CGPoint.zero, size: smallSquare))

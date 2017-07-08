@@ -57,29 +57,29 @@ class ErrandsManager{
 		
 		print("started construct shortest path, start: \(errands![startIndex].name), End: \(errands![endIndex].name)")
 
-		shortestPathHelper(path: minHeap.remove()!)
+		shortestPathHelper(path: firstPath)
 	}
 	
 	fileprivate func shortestPathHelper(path: Path){
 		print("Entering Shortest Path Helper on Path: \(path.toString())")
 		let pathEnd = path.path.last!
-		if minPath != nil && path.travelTime > minPath!.travelTime{	//this path is irrelevante, continue
+		if minPath != nil && path.travelTime > minPath!.travelTime{	//There exists a better solution, trash this path.
 			print("killing path, too long")
 			self.finishedLookingAtPath()
 			return									//kill this path
 		}else if path.path.count == errands.count - 1{	//just needs the last destination!
 			print("path is on last destination")
-			let leaveTime = path.arrivalTimes[pathEnd]!.addingTimeInterval(pathEnd.timeAtPlace)
-			print("leave time for \(errands[endIndex]) is \(leaveTime.displayDate)")
-			getETA(pathEnd, to: errands[endIndex], at: leaveTime, completion: { (result) in
+			let leaveAt = path.arrivalTimes[pathEnd]!.addingTimeInterval(pathEnd.timeAtPlace)
+			print("leave time for \(errands[endIndex]) is \(leaveAt.displayDate)")
+			getETA(pathEnd, to: errands[endIndex], at: leaveAt, completion: { (result) in
 				guard result != nil else{
 					print("error, result was nil when getting path \(pathEnd.name) to end destination \(self.errands[self.endIndex].name)")
-					self.finishedLookingAtPath()
+					self.endWithError()
 					return
 				}
 				path.travelTime = path.travelTime + result!		//update travel time
 				if self.minPath == nil || path.travelTime < self.minPath!.travelTime{ //If this could be the fastest path, update minPath
-					let timeOfArrival = path.arrivalTimes[pathEnd]!.addingTimeInterval(result!).addingTimeInterval(pathEnd.timeAtPlace)
+					let timeOfArrival = path.arrivalTimes[pathEnd]!.addingTimeInterval(pathEnd.timeAtPlace).addingTimeInterval(result!)
 					path.addErrand(errand: self.errands[self.endIndex], timeOfArrival: timeOfArrival)
 					self.minPath = path
 				}
@@ -88,7 +88,7 @@ class ErrandsManager{
 		}else{		//get shortest path to everyone but first and last, and throw nodes onto queue if they are updated
 			print("path has multiple destinations to hit: errands count \(errands.count)")
 			etaCallsCompleted = 0
-			etaCallsToMake = errands.count - 2 //call to everyone but first and last
+			etaCallsToMake = errands.count - path.path.count - 1 //call to everyone not yet in path and not last
 			for i in 0..<errands.count{
 				if i == self.endIndex || i == self.startIndex || path.contains(index: i){
 					print("skipping index \(i), \(errands[i].name)")
@@ -96,21 +96,17 @@ class ErrandsManager{
 				}
 				print("looking at destination index \(i)")
 				let newPath  = path.copy()
-				print("finished copying path")
-				let leavingTime = path.arrivalTimes[pathEnd]!.addingTimeInterval(pathEnd.timeAtPlace)
-				getETA(pathEnd, to: errands[i], at: leavingTime, completion: { (result) in
+				let leaveAt = path.arrivalTimes[pathEnd]!.addingTimeInterval(pathEnd.timeAtPlace)
+				getETA(pathEnd, to: errands[i], at: leaveAt, completion: { (result) in
 					print("in getETA completion")
 					self.etaCallsCompleted = self.etaCallsCompleted + 1
 					guard result != nil else{
-						print("error getting duration for a node")
-						if self.etaCallsCompleted >= self.etaCallsToMake{
-							self.finishedLookingAtPath()
-						}
+						self.endWithError()
 						return	//error, kill path
 					}
 					let newPath = path.copy()
 					newPath.travelTime = newPath.travelTime + result!
-					let arrivalTime = newPath.arrivalTimes[pathEnd]!.addingTimeInterval(result!).addingTimeInterval(pathEnd.timeAtPlace)
+					let arrivalTime = newPath.arrivalTimes[pathEnd]!.addingTimeInterval(pathEnd.timeAtPlace).addingTimeInterval(result!)
 					newPath.addErrand(errand: self.errands[i], timeOfArrival: arrivalTime)
 					
 					//Quick weedout of absurdly long paths
@@ -174,6 +170,9 @@ class ErrandsManager{
 			print("finished getting shortest path, but delegate is nil for errands manager, so result isn't going anywhere")
 		}
 	}
+	fileprivate func endWithError(){
+		delegate!.didGetShortestPath(path: nil, duration: nil)
+	}
 
 }
 
@@ -189,6 +188,7 @@ fileprivate class Path{	//allows maintaining multiple different paths in heap
 	
 	func addErrand(errand: Errand, timeOfArrival: Date){
 		path.append(errand)
+		hash[errand.index] = true
 		arrivalTimes[errand] = timeOfArrival
 	}
 	
@@ -239,7 +239,6 @@ fileprivate class Path{	//allows maintaining multiple different paths in heap
 
 fileprivate class PathMinHeap{		//heap starts at size 20 to avoid resizing, but resize check is in place for app scaling
 	var heap = [Path]()
-	var hash: [Bool]!
 
 	func swap(_ x: Int, y: Int){
 		let temp = heap[x]
@@ -312,3 +311,8 @@ fileprivate class PathMinHeap{		//heap starts at size 20 to avoid resizing, but 
 		}
 	}
 }
+
+
+
+
+

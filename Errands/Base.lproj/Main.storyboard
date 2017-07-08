@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12120" systemVersion="16F73" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="VFi-1K-Azh">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12120" systemVersion="16F73" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="bSZ-cn-5xk">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -10,7 +10,7 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Errands!-->
+        <!--Errandz!-->
         <scene sceneID="tne-QT-ifu">
             <objects>
                 <viewController id="BYZ-38-t0r" customClass="HomeViewController" customModule="Errands" customModuleProvider="target" sceneMemberID="viewController">
@@ -23,7 +23,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" keyboardDismissMode="interactive" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="UkN-5w-LSP">
-                                <rect key="frame" x="0.0" y="114" width="375" height="467"/>
+                                <rect key="frame" x="0.0" y="114" width="375" height="368"/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="UnorderedCell" id="1Ae-Tp-cxP" customClass="UnorderedCell" customModule="Errands" customModuleProvider="target">
@@ -106,6 +106,7 @@
                                             <outlet property="downArrow" destination="2YN-Mj-dtB" id="0dZ-wC-Frn"/>
                                             <outlet property="durationField" destination="z2M-kf-gaR" id="geb-3s-6Ug"/>
                                             <outlet property="locationLabel" destination="dNo-Sy-qso" id="OhY-Oo-VpK"/>
+                                            <outlet property="minutesLabel" destination="fnG-rB-Z9g" id="yUl-ec-1G8"/>
                                             <outlet property="startLabel" destination="eFQ-Dm-QJW" id="LAZ-OK-uIP"/>
                                             <outlet property="upArrow" destination="rcI-Hu-cym" id="6BF-RI-d9z"/>
                                         </connections>
@@ -188,41 +189,41 @@
                                 </connections>
                             </tableView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="C8P-d2-u3o" userLabel="Calculate">
-                                <rect key="frame" x="155" y="589" width="64" height="30"/>
+                                <rect key="frame" x="155" y="490" width="64" height="30"/>
                                 <state key="normal" title="Calculate"/>
                                 <connections>
                                     <action selector="calculateButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="AcL-UV-FhC"/>
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Total Duration:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8dT-Mp-ukz">
-                                <rect key="frame" x="16" y="621" width="89" height="16"/>
+                                <rect key="frame" x="16" y="522" width="89" height="16"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Expected Arrival Time:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xbw-Nn-Enk">
-                                <rect key="frame" x="16" y="641" width="136.5" height="16"/>
+                                <rect key="frame" x="16" y="542" width="136.5" height="16"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" text="Add up to 5 locations with the plus button in the top right, choose the start and end destination, and then press calculate!" textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bZG-g8-Mp6">
-                                <rect key="frame" x="8" y="72" width="359" height="57"/>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" text="Thanks for using the best navigation app! Go to the help tab for help" textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bZG-g8-Mp6">
+                                <rect key="frame" x="8" y="72" width="359" height="45"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="57" id="LMr-NQ-i1v"/>
+                                    <constraint firstAttribute="height" constant="45" id="LMr-NQ-i1v"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="4GM-XQ-JAF">
-                                <rect key="frame" x="89" y="132" width="198" height="30"/>
+                                <rect key="frame" x="89" y="120" width="198" height="30"/>
                                 <nil key="textColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Leave at:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zmq-eD-Udv">
-                                <rect key="frame" x="16" y="137" width="69" height="21"/>
+                                <rect key="frame" x="16" y="125" width="69" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -242,7 +243,7 @@
                             <constraint firstItem="4GM-XQ-JAF" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="OtL-iK-UTO"/>
                             <constraint firstItem="UkN-5w-LSP" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="Zbm-6y-Z5o"/>
                             <constraint firstAttribute="trailing" secondItem="bZG-g8-Mp6" secondAttribute="trailing" constant="8" id="Zy3-BE-4vk"/>
-                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="xbw-Nn-Enk" secondAttribute="bottom" constant="10" id="d9i-on-YwF"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="xbw-Nn-Enk" secondAttribute="bottom" constant="60" id="d9i-on-YwF"/>
                             <constraint firstItem="C8P-d2-u3o" firstAttribute="top" secondItem="UkN-5w-LSP" secondAttribute="bottom" constant="8" id="h5D-of-bXJ"/>
                             <constraint firstAttribute="trailing" secondItem="UkN-5w-LSP" secondAttribute="trailing" id="iN7-Qh-Ixm"/>
                             <constraint firstItem="4GM-XQ-JAF" firstAttribute="centerY" secondItem="zmq-eD-Udv" secondAttribute="centerY" id="jO3-ir-6ry"/>
@@ -250,7 +251,7 @@
                             <constraint firstItem="8dT-Mp-ukz" firstAttribute="top" secondItem="C8P-d2-u3o" secondAttribute="bottom" constant="2" id="nuM-Wv-0Sf"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="Errands!" id="Whu-AK-70R">
+                    <navigationItem key="navigationItem" title="Errandz!" id="Whu-AK-70R">
                         <barButtonItem key="rightBarButtonItem" style="plain" systemItem="add" id="LU7-Tu-nup">
                             <connections>
                                 <segue destination="WdA-WB-wMr" kind="show" id="Tdk-pQ-7Jr"/>
@@ -270,10 +271,49 @@
             </objects>
             <point key="canvasLocation" x="863.20000000000005" y="-660.71964017991013"/>
         </scene>
-        <!--Navigation Controller-->
+        <!--Free Mini Videos-->
+        <scene sceneID="CVw-ra-aC0">
+            <objects>
+                <viewController id="pmz-KE-gvP" customClass="AdViewController" customModule="Errands" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="Nyt-Nz-bE7"/>
+                        <viewControllerLayoutGuide type="bottom" id="ycM-Jj-vzV"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="PTc-ZA-jNn">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <tabBarItem key="tabBarItem" title="Free Mini Videos" image="play" badgeValue="Cool!" selectedImage="play" id="iaj-Lh-c2C"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="uoO-mx-rOH" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-79" y="-1314"/>
+        </scene>
+        <!--Tab Bar Controller-->
+        <scene sceneID="NGX-Gh-lg0">
+            <objects>
+                <tabBarController id="bSZ-cn-5xk" sceneMemberID="viewController">
+                    <tabBar key="tabBar" contentMode="scaleToFill" id="tWs-X1-DOj">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="49"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    </tabBar>
+                    <connections>
+                        <segue destination="VFi-1K-Azh" kind="relationship" relationship="viewControllers" id="p1T-yP-cwb"/>
+                        <segue destination="pmz-KE-gvP" kind="relationship" relationship="viewControllers" id="juQ-3L-lXA"/>
+                        <segue destination="bq0-Tk-1O9" kind="relationship" relationship="viewControllers" id="bm2-mp-n9X"/>
+                    </connections>
+                </tabBarController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="qI5-Ci-qbE" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1074" y="-662"/>
+        </scene>
+        <!--Get Directions-->
         <scene sceneID="81H-Wc-5iW">
             <objects>
                 <navigationController id="VFi-1K-Azh" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Get Directions" image="compass" selectedImage="compass" id="iFD-Rd-aUN"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="g1B-NG-tGe">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -285,6 +325,47 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="sEY-cq-GKd" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-79" y="-661"/>
+        </scene>
+        <!--Help-->
+        <scene sceneID="GGP-2s-mZd">
+            <objects>
+                <viewController id="bq0-Tk-1O9" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="Lfe-2r-Shv"/>
+                        <viewControllerLayoutGuide type="bottom" id="gdi-5J-eM1"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="GJt-F2-CLE">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NBi-Kz-C1m">
+                                <rect key="frame" x="16" y="8" width="343" height="602"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <mutableString key="text">* Basic use:
+    *  Enter where you need to go and how long you will be at each place. Then press calculate and Errands will calculate the optimal order.
+* Other Details: 
+    * You can add up to 6 locations
+    * Why only 6? This optimization algorithm uses predictive traffic data, so it give you the most accurate calculation and take into account things like rush hour. The downside is that this is a long calculation, and it runs much more slowly with over 6 locations
+    * Delete locations by dragging them to the left and pressing delete
+* How can you provide free mini videos?
+    * I’m just that nice</mutableString>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="NBi-Kz-C1m" firstAttribute="trailing" secondItem="GJt-F2-CLE" secondAttribute="trailingMargin" id="LGp-yI-Ss5"/>
+                            <constraint firstItem="gdi-5J-eM1" firstAttribute="top" secondItem="NBi-Kz-C1m" secondAttribute="bottom" constant="8" id="N8a-nB-cXc"/>
+                            <constraint firstItem="NBi-Kz-C1m" firstAttribute="leading" secondItem="GJt-F2-CLE" secondAttribute="leadingMargin" id="UCa-nU-Ehx"/>
+                            <constraint firstItem="NBi-Kz-C1m" firstAttribute="top" secondItem="GJt-F2-CLE" secondAttribute="topMargin" constant="8" id="jdL-ma-iWS"/>
+                        </constraints>
+                    </view>
+                    <tabBarItem key="tabBarItem" title="Help" image="info" selectedImage="info" id="Tp4-Od-NJl"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="il2-k7-Qie" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-130.40000000000001" y="783.95802098950526"/>
         </scene>
         <!--Map View Controller-->
         <scene sceneID="WJc-UV-C4C">
@@ -368,7 +449,10 @@
         </scene>
     </scenes>
     <resources>
+        <image name="compass" width="32" height="32"/>
         <image name="downArrow" width="32" height="32"/>
+        <image name="info" width="32" height="32"/>
+        <image name="play" width="32" height="32"/>
         <image name="plus" width="128" height="128"/>
         <image name="puArrow" width="32" height="32"/>
     </resources>

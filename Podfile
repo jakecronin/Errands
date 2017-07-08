@@ -7,4 +7,6 @@ target 'Errands' do
 
   # Pods for Errands
 
+  pod 'Google-Mobile-Ads-SDK'
+
 end

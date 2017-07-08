@@ -22,6 +22,7 @@ class UnorderedCell: UITableViewCell{
 	@IBOutlet weak var upArrow: UIButton!
 	@IBOutlet weak var downArrow: UIButton!
 	@IBOutlet weak var startLabel: UILabel!
+	@IBOutlet weak var minutesLabel: UILabel!
 	
 	@IBOutlet weak var locationLabel: UILabel!	
 	@IBAction func upPressed(sender: AnyObject){

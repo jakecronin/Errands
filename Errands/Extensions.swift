@@ -14,10 +14,20 @@ extension TimeInterval{
 		return Int((self.truncatingRemainder(dividingBy: 1)) * 1000)
 	}
 	var seconds: Int{
-		return Int(self.remainder(dividingBy: 60))
+		let toReturn = Int(self.remainder(dividingBy: 60))
+		if toReturn < 0{
+			return toReturn + 60
+		}else{
+			return toReturn
+		}
 	}
 	var minutes: Int{
-		return Int((self/60).remainder(dividingBy: 60))
+		let toReturn = Int((self/60).remainder(dividingBy: 60))
+		if toReturn < 0{
+			return toReturn + 60
+		}else{
+			return toReturn
+		}
 	}
 	var hours: Int{
 		return Int(self / (60*60))

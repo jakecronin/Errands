@@ -18,11 +18,12 @@ ERRPR 2: current algorithm finds shortest path, but does not guarentee that all 
 import Foundation
 import UIKit
 import MapKit
-import iAd
-
+import GoogleMobileAds
 
 
 class HomeViewController: UIViewController{
+	
+	var bannerView: GADBannerView!
 	
 	@IBOutlet weak var tableView: UITableView!
 	@IBOutlet weak var calculateButton: UIButton!
@@ -49,7 +50,18 @@ class HomeViewController: UIViewController{
 
 extension HomeViewController{
 	override func viewDidLoad() {
-		self.canDisplayBannerAds = true
+		super.viewDidLoad()
+		
+		bannerView = GADBannerView(adSize: kGADAdSizeSmartBannerPortrait)
+		self.view.addSubview(bannerView)
+		bannerView.center = self.view.center
+		bannerView.frame.origin.y = self.view.frame.maxY - bannerView.frame.height - 44
+		bannerView.adUnitID = "ca-app-pub-7240573263963478/7115056945"
+		bannerView.rootViewController = self
+		let request = GADRequest()
+		//request.testDevices = [kGADSimulatorID, "9D6F8FE6-6ACA-5E9A-A496-61A0AE85D71A"]
+		bannerView.load(request)
+		
 		errandsManager = ErrandsManager()
 		errandsManager.delegate = self
 		
@@ -71,7 +83,7 @@ extension HomeViewController{
 		if travelTime != nil{
 			durationLabel.text = "Time on road: \(travelTime!.stringTime)"
 		}
-		if let last = errands.last{
+		if errands.last != nil{
 			arrivalTimeLabel.text = "Arrive at final location: \(errands.last!.timeOfArrival.displayDate)"
 		}
 		tableView.reloadData()
@@ -93,6 +105,8 @@ extension HomeViewController{
 	
 	func dateValueChanged(_ sender: UIDatePicker){
 		timeInput.text = sender.date.displayDate
+		setUnordered()
+		tableView.reloadData()
 	}
 	
 	fileprivate func getPositionText(index: Int) -> String{
@@ -139,12 +153,19 @@ extension HomeViewController{
 	func donePressed() {
 		view.endEditing(true)
 	}
+	
+	func errorMessage(string: String){
+		let nameAlertView = UIAlertController(title: "Error", message: string, preferredStyle: UIAlertControllerStyle.alert)
+		nameAlertView.addAction(UIAlertAction(title: "Darn", style: .cancel, handler: nil))
+		self.present(nameAlertView, animated: true, completion: nil)
+	}
 }
 
 extension HomeViewController: ErrandsManagerDelegate{
 	func didGetShortestPath(path: [Errand]?, duration: Double?){
 		guard path != nil else{
 			print("error, got shortest path, but it was nil. not chanigng array")
+			errorMessage(string: "There was an error optimizing your route. Make sure that all destintaions can be reached by car")
 			return
 		}
 		errands = path!
@@ -161,7 +182,7 @@ extension HomeViewController{
 			print("not enough places to calculate optimal rout")
 			return
 		}
-		guard errands.count < 6 else{
+		guard errands.count <= 6 else{
 			print("error, too many locations.")
 			return
 		}
@@ -192,8 +213,8 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource{
 			cell.positionLabel.textColor = themeMainColor
 			let arrive = errands[indexPath.row].timeOfArrival
 			let timeAt = errands[indexPath.row].timeAtPlace
-			cell.arrivalLabel.text = "Arrive at: \(arrive.displayDate)"
-			cell.leaveLabel.text = "Leave at: \(arrive.addingTimeInterval(timeAt).displayDate)"
+			cell.arrivalLabel.text = "Arrive: \(arrive.displayDate)"
+			cell.leaveLabel.text = "Leave: \(arrive.addingTimeInterval(timeAt).displayDate)"
 			return cell
 		}else if indexPath.row == errands.count{
 			return tableView.dequeueReusableCell(withIdentifier: "AddCell") as! AddCell
@@ -204,6 +225,14 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource{
 			cell.delegate = self
 			cell.update(index: indexPath.row, errandsCount: errands.count)
 			addToolBar(to: cell.durationField)
+			if indexPath.row == 0 || indexPath.row == errands.count - 1{
+				cell.durationField.text = "0"
+				cell.durationField.isHidden = true
+				cell.minutesLabel.isHidden = true
+			}else{
+				cell.durationField.isHidden = false
+				cell.minutesLabel.isHidden = false
+			}
 			return cell
 		}
 	}
@@ -229,28 +258,8 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource{
 	}
 	func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 		print("selected cell")
-		if let cell = tableView.cellForRow(at: indexPath) as? AddCell{
+		if (tableView.cellForRow(at: indexPath) as? AddCell) != nil{
 			performSegue(withIdentifier: "segueToMap", sender: self)
-		}
-	}
-	func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
-		print("moving cell")
-		if let cell = tableView.cellForRow(at: sourceIndexPath) as? UnorderedCell{
-			if sourceIndexPath.row == 0{
-				cell.showStart()
-			}else if sourceIndexPath.row == errands.count - 1{
-				cell.showEnd()
-			}else{
-				cell.showNothing()
-			}
-		}else if let cell = tableView.cellForRow(at: destinationIndexPath) as? UnorderedCell{
-			if destinationIndexPath.row == 0{
-				cell.showStart()
-			}else if destinationIndexPath.row == errands.count - 1{
-				cell.showEnd()
-			}else{
-				cell.showNothing()
-			}
 		}
 	}
 }
@@ -269,6 +278,20 @@ extension HomeViewController: unorderedCellDelegate{
 				movingUp.update(index: i-1, errandsCount: errands.count)
 				movingDown.update(index: i, errandsCount: errands.count)
 				tableView.moveRow(at: at, to: to)
+				if i-1 == 0{
+					print("editting the index \(i)")
+					movingUp.durationField.text = "0"
+					movingUp.durationField.isHidden = true
+					movingUp.minutesLabel.isHidden = true
+					movingDown.durationField.isHidden = false
+					movingDown.minutesLabel.isHidden = false
+				}else if i == errands.count - 1{
+					movingUp.minutesLabel.isHidden = false
+					movingUp.durationField.isHidden = false
+					movingDown.minutesLabel.isHidden = true
+					movingDown.durationField.isHidden = true
+					movingDown.durationField.text = "0"
+				}
 				return
 			}
 		}
@@ -286,6 +309,20 @@ extension HomeViewController: unorderedCellDelegate{
 				movingDown.update(index: i+1, errandsCount: errands.count)
 				movingUp.update(index: i, errandsCount: errands.count)
 				tableView.moveRow(at: at, to: to)
+				if i+1 == errands.count - 1{
+					print("editting going down hidden stuff ")
+					movingDown.durationField.text = "0"
+					movingDown.durationField.isHidden = true
+					movingDown.minutesLabel.isHidden = true
+					movingUp.durationField.isHidden = false
+					movingUp.minutesLabel.isHidden = false
+				}else if i == 0{
+					movingUp.minutesLabel.isHidden = true
+					movingUp.durationField.isHidden = true
+					movingUp.durationField.text = "0"
+					movingDown.minutesLabel.isHidden = false
+					movingDown.durationField.isHidden = false
+				}
 				return
 			}
 		}
