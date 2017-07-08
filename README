@@ -1,0 +1,12 @@
+This app uses predictive traffic conditions to calculate the best route through several 
+locations factoring in time spent at each place.
+
+A common use case is someone needs to run some errands, and does not know what store to go to first.
+
+Another popular use case is when you are driving several friends home and want to figure out the optimal order in
+which to drop them off, factoring in that Jimmy alwasy takes forever to unload his things.
+
+The main purpose of this app was to use Google's AdMob and to get data structure pracice, and to practice building a
+ shortest path algorithm. The use of predictive traffic data makes the shortest path algorithm rather tricky as 
+ the travel time between locations is variable depending on the departure time. This variation significantly complicates
+ the problem.
