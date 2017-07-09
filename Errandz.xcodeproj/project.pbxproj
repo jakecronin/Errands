@@ -8,12 +8,12 @@
 
 /* Begin PBXBuildFile section */
 		633A18A61F10315C00008D5A /* AdViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 633A18A51F10315B00008D5A /* AdViewController.swift */; };
+		633A18A81F11914400008D5A /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 633A18A71F11914400008D5A /* MapKit.framework */; };
 		634045B61CFA30F400C807AE /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 634045B51CFA30F400C807AE /* HomeViewController.swift */; };
 		634045B81CFA314D00C807AE /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 634045B71CFA314D00C807AE /* MapViewController.swift */; };
 		6350A52A1D18ADFB00782726 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6350A5291D18ADFB00782726 /* CoreLocation.framework */; };
 		6376698D1F09F620008BDA50 /* UnorderedCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6376698C1F09F620008BDA50 /* UnorderedCell.swift */; };
 		6376698F1F0BECAE008BDA50 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6376698E1F0BECAE008BDA50 /* Extensions.swift */; };
-		638521231CFB8AC9001BF266 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 638521221CFB8AC9001BF266 /* MapKit.framework */; };
 		63C2490B1F0DCE4500231D5F /* ErrandsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63C2490A1F0DCE4500231D5F /* ErrandsManager.swift */; };
 		63C2490D1F0DCE8000231D5F /* Errand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63C2490C1F0DCE8000231D5F /* Errand.swift */; };
 		63C249101F0DDA7100231D5F /* OrderedCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63C2490F1F0DDA7100231D5F /* OrderedCell.swift */; };
@@ -31,12 +31,12 @@
 		320CBEDACBD4ABB386AAD8D7 /* Pods-Errands.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Errands.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Errands/Pods-Errands.debug.xcconfig"; sourceTree = "<group>"; };
 		633A18A31F0F453200008D5A /* iAd.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = iAd.framework; path = System/Library/Frameworks/iAd.framework; sourceTree = SDKROOT; };
 		633A18A51F10315B00008D5A /* AdViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AdViewController.swift; sourceTree = "<group>"; };
+		633A18A71F11914400008D5A /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		634045B51CFA30F400C807AE /* HomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = HomeViewController.swift; path = ../HomeViewController.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		634045B71CFA314D00C807AE /* MapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		6350A5291D18ADFB00782726 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		6376698C1F09F620008BDA50 /* UnorderedCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UnorderedCell.swift; sourceTree = "<group>"; };
 		6376698E1F0BECAE008BDA50 /* Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
-		638521221CFB8AC9001BF266 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		63C2490A1F0DCE4500231D5F /* ErrandsManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ErrandsManager.swift; sourceTree = "<group>"; };
 		63C2490C1F0DCE8000231D5F /* Errand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Errand.swift; sourceTree = "<group>"; };
 		63C2490F1F0DDA7100231D5F /* OrderedCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OrderedCell.swift; sourceTree = "<group>"; };
@@ -59,7 +59,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				6350A52A1D18ADFB00782726 /* CoreLocation.framework in Frameworks */,
-				638521231CFB8AC9001BF266 /* MapKit.framework in Frameworks */,
+				633A18A81F11914400008D5A /* MapKit.framework in Frameworks */,
 				AFCE9CDBBE0FFF5704F745D2 /* Pods_Errands.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -70,6 +70,7 @@
 		633A18A21F0F453200008D5A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				633A18A71F11914400008D5A /* MapKit.framework */,
 				633A18A31F0F453200008D5A /* iAd.framework */,
 				FD2B3C9E8223AF43B8C4AF92 /* Pods_Errands.framework */,
 			);
@@ -109,7 +110,6 @@
 			isa = PBXGroup;
 			children = (
 				6350A5291D18ADFB00782726 /* CoreLocation.framework */,
-				638521221CFB8AC9001BF266 /* MapKit.framework */,
 				63E6F35A1CF4E3F500886FE0 /* Errands */,
 				63E6F3591CF4E3F500886FE0 /* Products */,
 				633A18A21F0F453200008D5A /* Frameworks */,
