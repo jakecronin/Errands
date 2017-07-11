@@ -13,7 +13,7 @@
         <!--Errandz!-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="HomeViewController" customModule="Errands" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="HomeViewController" customModule="Errandz" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
                         <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
@@ -26,7 +26,7 @@
                                 <rect key="frame" x="0.0" y="114" width="375" height="368"/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="UnorderedCell" id="1Ae-Tp-cxP" customClass="UnorderedCell" customModule="Errands" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="UnorderedCell" id="1Ae-Tp-cxP" customClass="UnorderedCell" customModule="Errandz" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="1Ae-Tp-cxP" id="D6e-lo-esv">
@@ -111,7 +111,7 @@
                                             <outlet property="upArrow" destination="rcI-Hu-cym" id="6BF-RI-d9z"/>
                                         </connections>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="AddCell" id="Sue-Fp-Jjl" customClass="AddCell" customModule="Errands" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="AddCell" id="Sue-Fp-Jjl" customClass="AddCell" customModule="Errandz" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="72" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Sue-Fp-Jjl" id="WpR-KC-bJD">
@@ -132,7 +132,7 @@
                                             </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="OrderedCell" id="1t2-Ry-Wzh" customClass="OrderedCell" customModule="Errands" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="OrderedCell" id="1t2-Ry-Wzh" customClass="OrderedCell" customModule="Errandz" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="116" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="1t2-Ry-Wzh" id="xl1-cy-iVw">
@@ -274,7 +274,7 @@
         <!--Free Mini Videos-->
         <scene sceneID="CVw-ra-aC0">
             <objects>
-                <viewController id="pmz-KE-gvP" customClass="AdViewController" customModule="Errands" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="pmz-KE-gvP" customClass="AdViewController" customModule="Errandz" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="Nyt-Nz-bE7"/>
                         <viewControllerLayoutGuide type="bottom" id="ycM-Jj-vzV"/>
@@ -338,17 +338,17 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NBi-Kz-C1m">
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NBi-Kz-C1m">
                                 <rect key="frame" x="16" y="8" width="343" height="602"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <mutableString key="text">* Basic use:
+                                <string key="text">* Basic use:
     *  Enter where you need to go and how long you will be at each place. Then press calculate and Errands will calculate the optimal order.
 * Other Details: 
     * You can add up to 6 locations
     * Why only 6? This optimization algorithm uses predictive traffic data, so it give you the most accurate calculation and take into account things like rush hour. The downside is that this is a long calculation, and it runs much more slowly with over 6 locations
     * Delete locations by dragging them to the left and pressing delete
 * How can you provide free mini videos?
-    * I’m just that nice</mutableString>
+    * I’m just that nice</string>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
@@ -370,7 +370,7 @@
         <!--Map View Controller-->
         <scene sceneID="WJc-UV-C4C">
             <objects>
-                <viewController id="WdA-WB-wMr" customClass="MapViewController" customModule="Errands" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="WdA-WB-wMr" customClass="MapViewController" customModule="Errandz" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="Hxi-MY-5Mm"/>
                         <viewControllerLayoutGuide type="bottom" id="F6E-tP-IdV"/>
@@ -406,7 +406,7 @@
         <!--Location Search Table-->
         <scene sceneID="4DO-Mz-qQd">
             <objects>
-                <tableViewController storyboardIdentifier="LocationSearchTable" useStoryboardIdentifierAsRestorationIdentifier="YES" id="yk2-Si-V0N" customClass="LocationSearchTable" customModule="Errands" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="LocationSearchTable" useStoryboardIdentifierAsRestorationIdentifier="YES" id="yk2-Si-V0N" customClass="LocationSearchTable" customModule="Errandz" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="JGp-XY-iIq">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
