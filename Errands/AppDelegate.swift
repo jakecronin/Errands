@@ -19,7 +19,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 		UITabBar.appearance().tintColor = themeMainColor
 		UINavigationBar.appearance().tintColor = themeMainColor
 
-		GADMobileAds.configure(withApplicationID: "ca-app-pub-7240573263963478~5638323740")
+		GADMobileAds.configure(withApplicationID: appAdID)
 		return true
 	}
 

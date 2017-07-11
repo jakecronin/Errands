@@ -24,8 +24,8 @@ class AdViewController: UIViewController{
 	func presentAd(){
 		beginActivityIndicator()
 		let request = GADRequest()
-		//request.testDevices = [kGADSimulatorID, "9D6F8FE6-6ACA-5E9A-A496-61A0AE85D71A"]
-		GADRewardBasedVideoAd.sharedInstance().load(request, withAdUnitID: "ca-app-pub-7240573263963478/2266054941")
+		request.testDevices = [kGADSimulatorID]//, "9D6F8FE6-6ACA-5E9A-A496-61A0AE85D71A"]
+		GADRewardBasedVideoAd.sharedInstance().load(request, withAdUnitID: vidoeAdID)
 	}
 	func beginActivityIndicator(){
 		activityIndicator = UIActivityIndicatorView(frame: CGRect(x: 0, y: 0, width: 150, height: 150))

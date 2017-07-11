@@ -56,10 +56,10 @@ extension HomeViewController{
 		self.view.addSubview(bannerView)
 		bannerView.center = self.view.center
 		bannerView.frame.origin.y = self.view.frame.maxY - bannerView.frame.height - 44
-		bannerView.adUnitID = "ca-app-pub-7240573263963478/7115056945"
+		bannerView.adUnitID = bannerAdID
 		bannerView.rootViewController = self
 		let request = GADRequest()
-		//request.testDevices = [kGADSimulatorID, "9D6F8FE6-6ACA-5E9A-A496-61A0AE85D71A"]
+		request.testDevices = [kGADSimulatorID]//, "9D6F8FE6-6ACA-5E9A-A496-61A0AE85D71A"]
 		bannerView.load(request)
 		
 		errandsManager = ErrandsManager()
