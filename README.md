@@ -1,4 +1,5 @@
 <img src="https://github.com/jakecronin/Errands/blob/master/ErrandsLogo.png" width="200"/>
+
 # Errands
 Calculate the optimal order in which to go to multiple destinations using predicted traffic conditions.
 ![Itunes Link](https://itunes.apple.com/us/app/errandz/id1257418211?mt=8 "Link to App on Itunes")
@@ -15,11 +16,14 @@ A common use case is someone needs to run some errands, and does not know what s
 
 # Screenshots
 
-Displaying Results
+Displaying Results:
+
 <img src="https://github.com/jakecronin/Errands/blob/master/Images/Results.jpg" width="200"/>
 
-Adding Destinations
+Adding Destinations:
+
 <img src="https://github.com/jakecronin/Errands/blob/master/Images/Add_Locations.jpg" width="200"/>
 
-Grabbing Location
+Grabbing Location:
+
 <img src="https://github.com/jakecronin/Errands/blob/master/Images/Get_Location.jpg" width="200"/>
